@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1020">
+    <meta name="description" content="AI-powered bug diagnosis, severity classification, and issue resolution planning.">
+
+    <title>BugLens AI | Issue Intelligence</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <aside class="sidebar">
+            <a class="brand" href="#">
+                <span class="brand-mark">B<span>.</span></span>
+                <span class="brand-name">BUGLENS<span>AI</span></span>
+            </a>
+
+            <div class="side-label">WORKSPACE</div>
+
+            <a class="side-link selected" href="#analyzer">
+                <span class="side-icon">⌘</span>
+                Issue Analyzer
+            </a>
+
+            <a class="side-link" href="#results">
+                <span class="side-icon">◈</span>
+                Diagnostic Report
+            </a>
+
+            <div class="sidebar-bottom">
+                <div class="engine-card">
+                    <div class="engine-top">
+                        <span class="engine-dot"></span>
+                        <span>AI ENGINE</span>
+                    </div>
+                    <strong>Groq + LangGraph</strong>
+                    <p>Multi-stage bug intelligence</p>
+                </div>
+
+                <div class="sidebar-version">BUGLENS AI <span>V1.0.0</span></div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div class="breadcrumb">WORKSPACE <span>/</span> ISSUE INTELLIGENCE</div>
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    API CONNECTION
+                </div>
+            </header>
+
+            <div class="content-wrap">
+
+                <section class="hero">
+                    <div class="hero-copy">
+                        <div class="eyebrow">
+                            <span class="eyebrow-line"></span>
+                            SOFTWARE QUALITY INTELLIGENCE
+                        </div>
+
+                        <h1>Find the bug.<br><span>Understand the cause.</span></h1>
+
+                        <p>
+                            Turn unclear software issues into actionable diagnostic
+                            reports with AI-powered severity analysis and root-cause hypotheses.
+                        </p>
+                    </div>
+
+                    <div class="hero-visual" aria-hidden="true">
+                        <div class="visual-ring ring-one"></div>
+                        <div class="visual-ring ring-two"></div>
+                        <div class="visual-core">B<span>!</span></div>
+                        <div class="visual-chip chip-top">AI / ACTIVE</div>
+                        <div class="visual-chip chip-bottom">DIAGNOSTICS</div>
+                    </div>
+                </section>
+
+                <section class="workflow" aria-label="Analysis workflow">
+                    <div class="workflow-step active">
+                        <span class="step-number">01</span>
+                        <div>
+                            <strong>ANALYZE</strong>
+                            <small>Capture the issue</small>
+                        </div>
+                    </div>
+
+                    <span class="workflow-line"></span>
+
+                    <div class="workflow-step">
+                        <span class="step-number">02</span>
+                        <div>
+                            <strong>DIAGNOSE</strong>
+                            <small>Investigate causes</small>
+                        </div>
+                    </div>
+
+                    <span class="workflow-line"></span>
+
+                    <div class="workflow-step">
+                        <span class="step-number">03</span>
+                        <div>
+                            <strong>RESOLVE</strong>
+                            <small>Plan next actions</small>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel input-panel" id="analyzer">
+                    <div class="panel-heading">
+                        <div class="section-icon">01</div>
+                        <div>
+                            <div class="section-kicker">INPUT TERMINAL</div>
+                            <h2>Issue description</h2>
+                            <p>Describe the failure, unexpected behavior, or technical issue.</p>
+                        </div>
+                    </div>
+
+                    <form id="bugForm">
+                        <div class="label-row">
+                            <label for="bugDescription">BUG DETAILS</label>
+                            <span class="input-hint">MIN 10 / MAX 5000 CHARACTERS</span>
+                        </div>
+
+                        <textarea
+                            id="bugDescription"
+                            name="description"
+                            minlength="10"
+                            maxlength="5000"
+                            rows="6"
+                            required
+                            placeholder="Describe the issue, the action that triggers it, and the expected behavior..."
+                        ></textarea>
+
+                        <div class="field-info">
+                            <span><span class="info-symbol">i</span> More detail can help improve diagnostic quality.</span>
+                            <span id="charCount">0 / 5000</span>
+                        </div>
+
+                        <div class="actions">
+                            <button class="btn primary" id="analyzeBtn" type="submit">
+                                <span class="button-symbol">↗</span>
+                                ANALYZE ISSUE
+                            </button>
+
+                            <button class="btn secondary" id="clearBtn" type="button">
+                                RESET WORKSPACE
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="error" id="errorMessage" role="alert" aria-live="assertive"></div>
+
+                    <div class="loading" id="loading" role="status" aria-live="polite">
+                        <div class="loading-orbit"><span></span></div>
+                        <div>
+                            <strong>RUNNING DIAGNOSTICS</strong>
+                            <p>Analyzing the issue through the AI workflow...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="results" aria-labelledby="resultsHeading">
+                    <div class="results-heading">
+                        <div>
+                            <div class="section-kicker">DIAGNOSTIC OUTPUT / GENERATED REPORT</div>
+                            <h2 id="resultsHeading">Analysis report<span class="heading-period">.</span></h2>
+                            <p>Review the findings before investigating or applying a fix.</p>
+                        </div>
+
+                        <button class="btn secondary" id="downloadBtn" type="button">
+                            ↓ EXPORT JSON
+                        </button>
+                    </div>
+
+                    <div class="result-grid">
+                        <article class="result-card title-card">
+                            <div class="card-topline">
+                                <h3>IDENTIFIED ISSUE</h3>
+                                <span class="card-index">OUT / 01</span>
+                            </div>
+                            <p id="bugTitle">Not available</p>
+                        </article>
+
+                        <article class="result-card severity-card">
+                            <div class="card-topline">
+                                <h3>SEVERITY CLASSIFICATION</h3>
+                                <span class="card-index">OUT / 02</span>
+                            </div>
+                            <span class="severity medium" id="severity">MEDIUM</span>
+                            <p id="severityReason" class="severity-reason">Not available</p>
+                        </article>
+
+                        <article class="result-card">
+                            <div class="card-topline">
+                                <h3>AFFECTED COMPONENT</h3>
+                                <span class="card-index">OUT / 03</span>
+                            </div>
+                            <p id="affectedFeature">Not available</p>
+                        </article>
+
+                        <article class="result-card">
+                            <div class="card-topline">
+                                <h3>ISSUE SUMMARY</h3>
+                                <span class="card-index">OUT / 04</span>
+                            </div>
+                            <p id="issueSummary">Not available</p>
+                        </article>
+
+                        <article class="result-card full">
+                            <div class="card-topline">
+                                <h3>ROOT-CAUSE HYPOTHESES</h3>
+                                <span class="card-index">INVESTIGATION / 05</span>
+                            </div>
+                            <p class="cause-intro">Potential explanations to investigate. These are hypotheses, not confirmed diagnoses.</p>
+                            <ol id="possibleCauses"></ol>
+                        </article>
+
+                        <article class="result-card full resolution-card">
+                            <div class="card-topline">
+                                <h3>RESOLUTION CHECKLIST</h3>
+                                <span class="card-index">NEXT ACTIONS / 06</span>
+                            </div>
+                            <p class="cause-intro">Use these general debugging steps to investigate the issue. They are not a verified fix.</p>
+
+                            <div class="resolution-list">
+                                <label class="resolution-item">
+                                    <input type="checkbox">
+                                    <span>Reproduce the issue and record the exact steps.</span>
+                                </label>
+                                <label class="resolution-item">
+                                    <input type="checkbox">
+                                    <span>Inspect browser console and backend logs for errors.</span>
+                                </label>
+                                <label class="resolution-item">
+                                    <input type="checkbox">
+                                    <span>Test likely causes and verify the proposed fix.</span>
+                                </label>
+                                <label class="resolution-item">
+                                    <input type="checkbox">
+                                    <span>Run a regression test to confirm normal behavior.</span>
+                                </label>
+                            </div>
+                        </article>
+
+                        <article class="result-card full">
+                            <div class="card-topline">
+                                <h3>FULL REPORT</h3>
+                                <span class="card-index">EXPORT / 07</span>
+                            </div>
+                            <pre id="formattedReport">Your formatted report will appear here.</pre>
+                        </article>
+                    </div>
+                </section>
+
+                <footer>
+                    <span>BUGLENS AI <span class="footer-dot">/</span> ISSUE INTELLIGENCE</span>
+                    <span>AI-generated suggestions require human verification.</span>
+                </footer>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
