@@ -1,7 +1,8 @@
-
+fastapi
+uvicorn
 langgraph
 langchain-groq
-langchain-core
-fastapi
-uvicorn[standard]
+groq
 python-dotenv
+langsmith
+

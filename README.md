@@ -1,17 +1,18 @@
 # 🐞 BugLens AI — AI Bug Report Analyzer
 
-An AI-powered bug analysis system that transforms raw issue descriptions into structured diagnostic reports. Built with **Python, FastAPI, LangGraph, Groq AI, HTML, CSS, and JavaScript**.
+BugLens AI is an AI-powered bug analysis application that transforms raw issue descriptions into structured diagnostic reports using **LangGraph, Groq, and LangSmith**.
 
 ## ✨ Features
 
 - 🤖 AI-powered bug analysis
-- 🏷️ Automatic bug title generation
+- 📝 Automatic bug title and issue summary
 - 🎯 Affected feature identification
 - 🚦 Bug severity classification
-- 🔍 Possible root cause identification
-- 📝 Structured diagnostic reports
-- 📥 Export reports as JSON
-- 🧹 Clear and reset the analyzer
+- 🔍 Possible root cause analysis
+- 📋 Structured diagnostic reports
+- 📥 Export diagnostic reports as JSON
+- 🧹 Clear and reset functionality
+- 📊 LangSmith tracing for monitoring AI workflow runs
 - 🎨 Modern, responsive dark-themed user interface
 
 ## 🛠️ Tech Stack
@@ -20,14 +21,16 @@ An AI-powered bug analysis system that transforms raw issue descriptions into st
 - Python
 - FastAPI
 - LangGraph
+- LangChain Groq
 - Groq API
+- LangSmith
 
 **Frontend**
 - HTML5
 - CSS3
 - JavaScript
 
-## 📁 Project Structure
+## 📂 Project Structure
 
 ```text
 AI-Bug-Report-Analyzer/
@@ -51,7 +54,7 @@ AI-Bug-Report-Analyzer/
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/Rohama789-blip/AI-Bug-Report-Analyzer.git
 cd AI-Bug-Report-Analyzer
 ```
 
@@ -75,62 +78,72 @@ pip install -r requirements.txt
 
 ### 4. Configure environment variables
 
-Create a `.env` file in the project root and add your Groq API key:
+Create a `.env` file in the project root. Add your own API keys:
 
 ```env
-GROQ_API_KEY=your_groq_api_key_here
+GROQ_API_KEY=your_groq_api_key
+LANGSMITH_TRACING=true
+LANGSMITH_API_KEY=your_langsmith_api_key
+LANGSMITH_PROJECT=BugLens-AI
 ```
 
-Use the exact environment variable name expected by your backend code. Never upload your actual API key to GitHub.
+Never commit your actual `.env` file or expose your API keys.
 
 ### 5. Start the backend
 
-Open a terminal in the `backend` directory and run:
+From the project root, activate the virtual environment first. Then run:
 
 ```bash
+cd backend
 python -m uvicorn main:app --reload
 ```
 
-Backend API:
+Backend API: http://127.0.0.1:8000
 
-`http://127.0.0.1:8000`
+Interactive API documentation: http://127.0.0.1:8000/docs
 
-Interactive API documentation:
+### 6. Start the frontend
 
-`http://127.0.0.1:8000/docs`
+Open a second terminal in the project root, activate the virtual environment if needed, and run:
 
-### 6. Run the frontend
-
-Open `frontend/index.html` using the VS Code Live Server extension.
-
-Keep the backend running while using the frontend.
-
-## 🧪 Example Bug Report
-
-```text
-When a user enters a valid email and password
-on the login page and clicks the Login button,
-nothing happens. The user cannot access the
-dashboard, and no error message is displayed.
+```bash
+cd frontend
+python -m http.server 5500
 ```
 
-BugLens AI analyzes the description and returns a structured report containing the bug title, affected feature, issue summary, severity, severity reason, possible causes, and formatted report.
+Open http://127.0.0.1:5500 in your browser.
 
-## 🔐 Security
+Keep both servers running while using the application.
 
-- Store API keys in environment variables.
-- Keep `.env` out of version control.
-- Use `.env.example` to document the required environment variables without including secrets.
+## 📊 LangSmith Tracing
 
-## 🚀 Future Improvements
+LangSmith can trace supported LangGraph workflow runs when tracing is enabled and the environment variables are configured correctly.
+
+1. Create an account at [LangSmith](https://smith.langchain.com/).
+2. Generate a LangSmith API key.
+3. Add the LangSmith environment variables to your root `.env` file.
+4. Run BugLens AI and analyze a bug report.
+5. Open your LangSmith dashboard and select the `BugLens-AI` project to inspect available traces.
+
+Tracing requires a valid API key, correct environment configuration, and a workflow run that supports tracing.
+
+## 🧪 Example Input
+
+```text
+When a user clicks the login button after entering valid
+credentials, nothing happens and the dashboard does not open.
+```
+
+BugLens AI returns a structured diagnostic report containing the bug title, affected feature, issue summary, severity, severity reason, possible causes, and formatted report.
+
+## 🔮 Future Improvements
 
 - AI-generated bug fix suggestions
-- Automated code-level debugging
 - Bug report history
-- User authentication
 - Database integration
+- Automated debugging
 - Cloud deployment
 
 ## 📄 License
 
-This project is available for educational and portfolio purposes. Add a license file if you intend to distribute it under a specific open-source license.
+For educational and portfolio purposes. Add a license file if you plan to distribute the project under a specific open-source license.
